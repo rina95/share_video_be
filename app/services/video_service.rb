@@ -14,7 +14,6 @@ class VideoService
 
     data = Youtube::Client.video_detail(video_id)
     if data.any?
-      pp data
       video_snippet = data["items"][0]["snippet"]
       video.assign_attributes(video_id: video_id, **video_snippet.slice("title", "description"))
       video.save
@@ -40,7 +39,11 @@ class VideoService
   end
 
   def notify_to_user video
-    data = {user_name: video.user&.name, title: video.title}
-    NotificationJob.perform_now(data)
+    begin
+      data = {user_name: video.user&.name, title: video.title}
+      NotificationJob.perform_now(data)
+    rescue => e 
+      Rails.logger.error e.message
+    end
   end
 end

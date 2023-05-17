@@ -1,6 +1,14 @@
 class VideoSerializer
   include JSONAPI::Serializer
-  attributes  :url, :video_id, :title, :source_type, :description, :embed_url, :created_at
+  attributes :id, :url, :video_id, :title, :description, :embed_url, :created_at
 
-  belongs_to :user
+  set_type :video
+
+  attribute :user_id do |video|
+    video.user&.id
+  end
+
+  attribute :user_name do |video|
+    video.user&.name
+  end
 end

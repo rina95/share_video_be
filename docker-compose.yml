@@ -20,13 +20,18 @@ services:
     image: postgres:10.3-alpine
   redis:
     image: redis:4.0-alpine
-    command: redis-server --requirepass password
+    command: redis-server
+    ports:
+      - "6379:6379"
   cable:
     depends_on:
       - redis
     build: .
-    # command: puma -p 28080 cable/config.ru
+    command: bundle exec puma -p 28080 cable/config.ru
     ports:
       - '28080:28080'
     volumes:
       - .:/usr/src/share_videos/
+volumes:
+  redis:
+  postgres:
