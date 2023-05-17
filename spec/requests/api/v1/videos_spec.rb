@@ -1,0 +1,11 @@
+require 'rails_helper'
+
+RSpec.describe "Api::V1::Videos", type: :request do
+  describe "GET /index" do
+    pending "add some examples (or delete) #{__FILE__}"
+  end
+
+  describe "POST /create" do
+    
+  end
+end
