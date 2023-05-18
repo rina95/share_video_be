@@ -19,11 +19,11 @@ class VideoService
       video.save
       notify_to_user(video)
     else
-      video.errors.add(:url, "URL invalid")
+      video.errors.add(:url, "is invalid")
     end
     video
   rescue => ex
-    video.errors.add(:url, "URL invalid")
+    video.errors.add(:url, "is invalid")
     video
   end
 
@@ -41,7 +41,7 @@ class VideoService
   def notify_to_user video
     begin
       data = {user_name: video.user&.name, title: video.title}
-      NotificationJob.perform_now(data)
+      ActionCable.server.broadcast "NotificationsChannel", { data: data }
     rescue => e 
       Rails.logger.error e.message
     end

@@ -7,12 +7,11 @@ class Api::V1::VideosController < ApplicationController
     @videos = Video.includes(:user).page(params[:page]).per(params[:per_page])
     options = {
       links: {
-        first: api_v1_videos_path(page: 1),
-        last: api_v1_videos_path(page: @videos.total_pages),
-        prev: api_v1_videos_path(page: @videos.prev_page),
-        next: api_v1_videos_path(page: @videos.next_page),
-      },
-      include: [:user]
+        first: 1,
+        last: @videos.total_pages,
+        prev: @videos.prev_page,
+        next: @videos.next_page,
+      }
     }
 
     render json: VideoSerializer.new(@videos, options).serializable_hash.to_json
@@ -21,7 +20,7 @@ class Api::V1::VideosController < ApplicationController
   def create
     @video = VideoService.new(video_params).create_video
     if @video.errors.any?
-      render json: { errors: @video.errors }, status: :unprocessable_entity
+      render json: { messages: @video.errors.full_messages }, status: :unprocessable_entity
     else
       render json: VideoSerializer.new(@video).serializable_hash.to_json, status: :created
     end
