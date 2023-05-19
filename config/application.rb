@@ -20,5 +20,6 @@ module ShareVideos
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
     # config.action_cable.mount_path = '/websocket'
+    config.hosts << "young-thicket-24176.herokuapp.com"
   end
 end
