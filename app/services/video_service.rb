@@ -41,7 +41,8 @@ class VideoService
   def notify_to_user video
     begin
       data = {user_name: video.user&.name, title: video.title}
-      ActionCable.server.broadcast "NotificationsChannel", { data: data }
+      # ActionCable.server.broadcast "NotificationsChannel", { data: data }
+      NotificationJob.perform_later(data)
     rescue => e 
       Rails.logger.error e.message
     end

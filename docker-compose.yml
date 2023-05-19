@@ -9,7 +9,6 @@ services:
     volumes:
       - .:/usr/src/share_videos/
     environment:
-      RAILS_ENV: development
       DATABASE_URL: postgres://postgres@db
     tty: true
     stdin_open: true
