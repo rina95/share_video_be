@@ -1,0 +1,14 @@
+.git*
+db/*.sqlite3
+/db/*.sqlite3-*
+log/*
+tmp/*
+Dockerfile
+.env
+config/settings.local.yml
+config/settings/*.local.yml
+config/environments/*.local.yml
+config/application.yml
+docker-compose.yml
+docker-compose.override.yml
+README.rdoc
